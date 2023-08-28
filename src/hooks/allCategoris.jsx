@@ -18,6 +18,8 @@ console.log(data);
     };
     getAllCategoris()
   }, []);
+
+  console.log(categories);
   return categories;
 };
 

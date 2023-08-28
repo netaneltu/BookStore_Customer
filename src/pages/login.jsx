@@ -140,7 +140,7 @@ const login = () => {
                   onBlur={nameInputBlureHandler}
                   onChange={nameInputChangeHandler}
                   variant="filled"
-                  placeholder="israel"
+                  placeholder="israel@gmail.com"
                   isInvalid={emailIsError}
                 />
               </GridItem>

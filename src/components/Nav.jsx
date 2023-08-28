@@ -6,6 +6,8 @@ import {
     Button,
     Image,
     Input,
+    InputGroup,
+    InputLeftElement,
     IconButton,
   } from "@chakra-ui/react";
   import axios from "axios";
@@ -87,6 +89,7 @@ import {
             <Image src="../../public/open-book.png" />
           </Box>
           <Box w={[100, 400, 600]} maxW="30rem">
+          <InputGroup>
             <Input
               borderColor="gray.800"
               borderWidth={1}
@@ -95,10 +98,14 @@ import {
               p={7}
               placeholder="מה תרצו לקנות היום?"
             />
-          </Box>
-          <Box as="button" onClick={logFun}>
+            <InputLeftElement>
+            <Box mt="5" ml="5" as="button" onClick={logFun}>
             <BiSearchAlt color="black" size="2rem"></BiSearchAlt>
           </Box>
+            </InputLeftElement>
+            </InputGroup>
+          </Box>
+          
           <Box as={rl} to="/account">
             <BsFillPersonFill color="black" size="2rem"></BsFillPersonFill>
           </Box>
