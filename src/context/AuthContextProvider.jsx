@@ -36,7 +36,6 @@ function AuthContextProvider({ children }) {
       authUser();
     }
   }, [cookies.token]);
-  console.log(valueToShare);
   return (
     <AuthContext.Provider value={valueToShare}>{children}</AuthContext.Provider>
   );

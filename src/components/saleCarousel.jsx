@@ -39,7 +39,7 @@ const SaleCarousel = () => {
         containerClass="carousel-container"
         dotListClass=""
         draggable
-        focusOnSelect={true}
+        focusOnSelect={false}
         infinite={true}
         itemClass="Carousel"
         keyBoardControl

@@ -1,26 +1,25 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const allCategoris = () => {
+const allCategories = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-   const getAllCategoris = async () => {
+    const getAllCategoris = async () => {
       try {
         const { data } = await axios.get(
-          `${import.meta.env.VITE_SERVER_URL}/categories/managers/all`
+          `${import.meta.env.VITE_SERVER_URL}/categories/customers/all`
         );
-console.log(data);
         setCategories(data.categories);
       } catch (error) {
         console.log(error);
       }
     };
-    getAllCategoris()
+    getAllCategoris();
   }, []);
 
   console.log(categories);
   return categories;
 };
 
-export default allCategoris;
+export default allCategories;
