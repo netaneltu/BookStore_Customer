@@ -1,4 +1,4 @@
-import './App.css'
+import "./App.css";
 import {
   Route,
   createBrowserRouter,
@@ -8,6 +8,7 @@ import {
 import Root from "./pages/Root";
 import Login from "./pages/login";
 import Home from "./pages/home";
+import ProductCategory from "./pages/productCategory";
 // import Dashboard from "./pages/private/Dashboard";
 // import Products from "./pages/private/Products/Products";
 // import Orders from "./pages/private/Orders/Orders";
@@ -28,6 +29,8 @@ const router = createBrowserRouter(
 
       <Route element={<PriveateRoutes />}>
         <Route path="Home" element={<Home />} />
+        <Route path="ProductCategory" element={<ProductCategory />} />
+
         {/* <Route path="dashboard" element={<Dashboard />} /> */}
 
         {/* <Route path="products">
@@ -54,15 +57,12 @@ const router = createBrowserRouter(
   )
 );
 
-
 function App() {
- 
   return (
-      <ChakraProvider>
+    <ChakraProvider>
       <RouterProvider router={router} />
     </ChakraProvider>
-   
-  )
+  );
 }
 
-export default App
+export default App;
