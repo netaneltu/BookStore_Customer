@@ -12,22 +12,23 @@ import {
   CardBody,
   Heading,
   Card,
+  Link,
   Text,
+  Button,
 } from "@chakra-ui/react";
 import allCategories from "../hooks/allCategoris";
 import axios from "axios";
-import { link } from "joi";
+
+import { useNavigate } from "react-router-dom";
 
 const SecondaryNav = () => {
   const timerRef = useRef();
-
+  const navigate = useNavigate();
   const categoriesArray = allCategories();
 
   const [openMenu, setopenMenu] = useState(null);
   const [categories, setCategoris] = useState(null);
   const [topProducts, setTopProducts] = useState(null);
-
-  
 
   const handleMouseEnter = (id) => {
     clearTimeout(timerRef.current);
@@ -67,12 +68,18 @@ const SecondaryNav = () => {
           return (
             <Menu isOpen={openMenu == cat._id ? true : false} id={cat._id}>
               <MenuButton
+                onClick={() => {
+                  console.log("hi");
+                  navigate("/productCategory", {
+                    state: cat.category_name,
+                  });
+                }}
                 onMouseEnter={() => {
                   handleMouseEnter(cat._id);
                 }}
                 onMouseLeave={handleMouseLeave}
               >
-                {cat.category_name}
+                <Heading size="md">{cat.category_name}</Heading>
               </MenuButton>
 
               <MenuList

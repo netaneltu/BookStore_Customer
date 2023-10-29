@@ -4,7 +4,7 @@ import SideBar from "../components/sideBar";
 import Footer from "../components/footer";
 // import CardBuild from '../components/cardBuild';
 
-const productCategory = () => {
+const ProductCategory = () => {
   return (
     <>
     
@@ -17,4 +17,4 @@ const productCategory = () => {
   );
 };
 
-export default productCategory;
+export default ProductCategory;

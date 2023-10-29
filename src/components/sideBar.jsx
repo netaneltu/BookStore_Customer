@@ -1,9 +1,12 @@
 import React from "react";
 import allCategories from "../hooks/allCategoris";
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+import { useLocation } from "react-router-dom";
 
 const sideBar = () => {
   const categoriesArray = allCategories();
+  const { state } = useLocation();
+
   console.log(categoriesArray);
   return (
     <Flex
@@ -18,11 +21,16 @@ const sideBar = () => {
       {categoriesArray.map((cat) => {
         return (
           <>
-            <Heading size="md">{cat.category_name}</Heading>
-            if()
-            {cat.subcategories.map((subCat) => {
-              return <Text>{subCat.category_name}</Text>;
-            })}
+            <Heading padding="5px" size="md">
+              {cat.category_name}
+            </Heading>
+            {state === cat.category_name
+              ? cat.subcategories.map((subCat) => {
+                  return (
+                    <Text paddingRight="20px">{subCat.category_name}</Text>
+                  );
+                })
+              : null}
           </>
         );
       })}
