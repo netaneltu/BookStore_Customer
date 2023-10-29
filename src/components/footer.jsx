@@ -7,13 +7,13 @@ const Footer = () => {
         <Container  borderRadius="10px" marginBottom="10em" marginTop="5em" maxW='90%'  h="20em" bgColor="#E8DBC9">
             <Flex gap="6em" justifyContent="center">
                 <Box display='flex'  flexDirection="column">
-                    <Heading size='md'>צור קשר</Heading>
+                    <Heading  pt="1em" size='md'>צור קשר</Heading>
                     <Link>כתובת: הנחלים 352,יד-בנימין</Link>
                     <Link>📞 052-4669864</Link>
                     <Link>✉ mail@gmail.com </Link>
                 </Box>
                 <Box display='flex'  flexDirection="column">
-                    <Heading size='md'>ניווט באתר</Heading>
+                    <Heading pt="1em" size='md'>ניווט באתר</Heading>
                     <Link>דף הבית</Link>
                     <Link>איזור אישי</Link>
                     <Link>צור קשר</Link>

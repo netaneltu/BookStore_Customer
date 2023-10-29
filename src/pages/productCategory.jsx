@@ -1,6 +1,7 @@
 import React from "react";
 import { Box,Flex  } from "@chakra-ui/react";
 import SideBar from "../components/sideBar";
+import ProductCard from "../components/productCard";
 import Footer from "../components/footer";
 // import CardBuild from '../components/cardBuild';
 
@@ -10,7 +11,7 @@ const ProductCategory = () => {
     
      <Flex columns={2}  >
       <SideBar/>
-      <Box w="100px" h="400px" bgColor="red"></Box>
+      <ProductCard/>
       </Flex>
       <Footer />
     </>

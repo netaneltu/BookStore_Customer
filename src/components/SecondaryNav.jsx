@@ -68,6 +68,7 @@ const SecondaryNav = () => {
           return (
             <Menu isOpen={openMenu == cat._id ? true : false} id={cat._id}>
               <MenuButton
+              color="#94530D"
                 onClick={() => {
                   console.log("hi");
                   navigate("/productCategory", {
