@@ -72,7 +72,7 @@ const SecondaryNav = () => {
                 onClick={() => {
                   console.log("hi");
                   navigate("/productCategory", {
-                    state: cat.category_name,
+                    state:{category:cat.category_name,heading:cat}
                   });
                 }}
                 onMouseEnter={() => {

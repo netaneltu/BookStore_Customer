@@ -4,8 +4,8 @@ import { Container, Flex,Box, Heading,Link,Input,Stack, Button } from "@chakra-u
 
 const Footer = () => {
     return (
-        <Container  borderRadius="10px" marginBottom="10em" marginTop="5em" maxW='90%'  h="20em" bgColor="#E8DBC9">
-            <Flex gap="6em" justifyContent="center">
+        <Container   borderRadius="10px" marginBottom="10em" marginTop="5em" maxW='90%'  h="full" bgColor="#E8DBC9">
+            <Flex   direction={["column", "row"]} gap="6em" justifyContent="center">
                 <Box display='flex'  flexDirection="column">
                     <Heading  pt="1em" size='md'>צור קשר</Heading>
                     <Link>כתובת: הנחלים 352,יד-בנימין</Link>
