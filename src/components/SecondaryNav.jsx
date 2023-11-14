@@ -17,7 +17,6 @@ import {
   Button,
 } from "@chakra-ui/react";
 import allCategories from "../hooks/allCategoris";
-import axios from "axios";
 
 import { useNavigate } from "react-router-dom";
 
@@ -27,8 +26,7 @@ const SecondaryNav = () => {
   const categoriesArray = allCategories();
 
   const [openMenu, setopenMenu] = useState(null);
-  const [categories, setCategoris] = useState(null);
-  const [topProducts, setTopProducts] = useState(null);
+ 
 
   const handleMouseEnter = (id) => {
     clearTimeout(timerRef.current);
@@ -70,7 +68,6 @@ const SecondaryNav = () => {
               <MenuButton
               color="#94530D"
                 onClick={() => {
-                  console.log("hi");
                   navigate("/productCategory", {
                     state:{category:cat.category_name,heading:cat}
                   });

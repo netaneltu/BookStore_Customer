@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import allProducts from "../hooks/allProducts";
 import {
@@ -14,44 +15,47 @@ import {
 } from "@chakra-ui/react";
 
 const ProductCard = () => {
+  const navigate = useNavigate();
+
   const allProductsAray = allProducts();
   console.log(allProductsAray);
   const { state } = useLocation();
   const [filteredProducts, setFilteredProducts] = useState([]);
-  
+
   const category = state.heading;
 
   useEffect(() => {
     const filteringProducts = () => {
-     setFilteredProducts(allProductsAray.filter((product) => {
-    if(category.subcategories){
-        for (let j = 0; j < product.categories.length; j++) {
-          if (product.categories[j].parent === category.category_name) {
-            return product;
+      setFilteredProducts(
+        allProductsAray.filter((product) => {
+          if (category.subcategories) {
+            for (let j = 0; j < product.categories.length; j++) {
+              if (product.categories[j].parent === category.category_name) {
+                return product;
+              }
+            }
+          } else {
+            for (let j = 0; j < product.categories.length; j++) {
+              if (product.categories[j].name === category.category_name) {
+                return product;
+              }
+            }
           }
-        }
-      }
-    else{
-      for (let j = 0; j < product.categories.length; j++) {
-        if (product.categories[j].name === category.category_name) {
-          return product;
-        }
-      }
-    }
-      }))
+        })
+      );
     };
     filteringProducts();
-  },[] [state.heading]);
+  }, [][state.heading]);
 
   console.log(filteredProducts);
 
   return (
-    <Stack>
+    <Stack w="100%">
       <Heading
         size={["md", "md", "xl"]}
         color="#94530D"
         pt="1em"
-        alignSelf="center"
+        textAlign="center"
       >{`▻ ${category.category_name}◅`}</Heading>
       <SimpleGrid columns={[1, 1, 2, 4]} gap="1rem" margin="5em">
         {filteredProducts.map((product) => {
@@ -81,6 +85,7 @@ const ProductCard = () => {
                 variant="outline"
                 margin="1em"
                 colorScheme="orange"
+                onClick={()=>{ navigate("/product", { state: product._id })}}
               >
                 קנה עכשיו
               </Button>
