@@ -26,7 +26,6 @@ const SecondaryNav = () => {
   const categoriesArray = allCategories();
 
   const [openMenu, setopenMenu] = useState(null);
- 
 
   const handleMouseEnter = (id) => {
     clearTimeout(timerRef.current);
@@ -66,10 +65,13 @@ const SecondaryNav = () => {
           return (
             <Menu isOpen={openMenu == cat._id ? true : false} id={cat._id}>
               <MenuButton
-              color="#94530D"
+                color="#94530D"
                 onClick={() => {
                   navigate("/productCategory", {
-                    state:{category:cat.category_name,heading:cat}
+                    state: {
+                      category: cat.category_name,
+                      heading: cat,
+                    },
                   });
                 }}
                 onMouseEnter={() => {

@@ -19,14 +19,40 @@ import { useCookies } from "react-cookie";
 import { BiSearchAlt } from "react-icons/bi";
 import { BsFillPersonFill, BsEnvelopeAtFill } from "react-icons/bs";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 import { Link as rl } from "react-router-dom";
 
 const Nav = () => {
+  const navigate = useNavigate();
+
   // const { manager, setManager } = useContext(AuthContext);
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
 
   const [isOpen, setIsOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+
+  const handleSearchInput = (event) => {
+    setSearchValue(event.target.value);
+  };
+
+  const handleSearch = async () => {
+    try {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_SERVER_URL}/products/customers/search`,
+        {
+          params: { searchInput: searchValue },
+        }
+      );
+
+      console.log(data);
+      navigate("/productCategory", {
+        state: {searchResulteId:data, heading: `תוצאות חיפוש: ${searchValue}` },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleLogout = async () => {
     try {
@@ -56,8 +82,6 @@ const Nav = () => {
 
   return (
     <div>
-     
-
       <Flex
         as="nav"
         align="center"
@@ -70,11 +94,10 @@ const Nav = () => {
         direction={["column", "row", "row"]}
         // mt={[20, 0, 0]}
       >
-        <Box 
- as={rl} to="/home" justifyContent="center" boxSize="5rem">
+        <Box as={rl} to="/home" justifyContent="center" boxSize="5rem">
           <Image src="../../public/open-book.png" />
         </Box>
-        <Box w={["90%"," 30%"]} maxW="30rem">
+        <Box w={["90%", " 30%"]} maxW="30rem">
           <InputGroup>
             <Input
               borderColor="gray.800"
@@ -83,15 +106,20 @@ const Nav = () => {
               color="black"
               p={7}
               placeholder="מה תרצו לקנות היום?"
+              onChange={handleSearchInput}
             />
             <InputLeftElement>
               <Box mt="5" ml="5" as="button">
-                <BiSearchAlt color="black" size="2rem"></BiSearchAlt>
+                <BiSearchAlt
+                  onClick={handleSearch}
+                  color="black"
+                  size="2rem"
+                ></BiSearchAlt>
               </Box>
             </InputLeftElement>
           </InputGroup>
         </Box>
-         
+
         <Box as={rl} to="/account">
           <BsFillPersonFill color="black" size="2rem"></BsFillPersonFill>
         </Box>
@@ -104,7 +132,6 @@ const Nav = () => {
         <Box as={rl} to="/mail">
           <BsEnvelopeAtFill color="black" size="2rem"></BsEnvelopeAtFill>
         </Box>
-       
       </Flex>
     </div>
   );
