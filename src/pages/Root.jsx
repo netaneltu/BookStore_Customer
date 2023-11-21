@@ -10,7 +10,7 @@ function Root() {
 
   return (
     <>
-      {user && <Nav />}
+      <Nav />
      
 
       <Outlet />

@@ -32,7 +32,7 @@ const CategorisCards = () => {
                 <Button 
                 onClick={() => {
                   navigate("/productCategory", {
-                    state:{category:category.category_name,heading:category}
+                    state:{category:category.category_name,heading:category.category_name ,data:category}
                   });
                 }}
                 borderRadius="15PX" variant="outline" maxW="8em">

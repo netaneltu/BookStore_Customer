@@ -20,12 +20,11 @@ const ProductCard = () => {
   const allProductsAray = allProducts();
   const { state } = useLocation();
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [header, setHeader] = useState(state.heading.category_name);
+  const [heading, setHeading] = useState(state.heading);
 
-
-  const category = state.heading;
-  const searchResulteId=state.searchResulteId.products
-  console.log(searchResulteId);
+  const category = state.data;
+  console.log(category);
+  console.log(state);
 
   useEffect(() => {
     const filteringProducts = () => {
@@ -37,19 +36,19 @@ const ProductCard = () => {
                 return product;
               }
             }
-          } else if(false) {
+          } else if (category.category_name) {
             for (let j = 0; j < product.categories.length; j++) {
               if (product.categories[j].name === category.category_name) {
                 return product;
               }
             }
-          }
-          else if(searchResulteId){
-            console.log("hi");
-            for (let j = 0; j < product.length; j++) {
-              for(let i = 0; i < searchResulteId.length; i++)
-              if (product._id[j] === searchResulteId[i]._id) {
-                console.log(searchResulteId[i]._id);
+          } else if (category.products) {
+            console.log(category.products);
+            console.log(allProductsAray);
+
+            for (let i = 0; i < category.products.length; i++) {
+              if (product._id === category.products[i]._id) {
+                console.log(category.products[i]._id);
                 return product;
               }
             }
@@ -58,13 +57,8 @@ const ProductCard = () => {
       );
     };
     filteringProducts();
-    if(state.heading.category_name){
-      setHeader(state.heading.category_name)
-    }
-    else{ setHeader(state.heading)}
-    
-  },[allProductsAray,state.heading]);
-
+    setHeading(state.heading)
+  }, [allProductsAray, state.heading]);
 
   return (
     <Stack w="100%">
@@ -73,7 +67,7 @@ const ProductCard = () => {
         color="#94530D"
         pt="1em"
         textAlign="center"
-      >{`▻ ${header}◅`}</Heading>
+      >{`▻ ${heading}◅`}</Heading>
       <SimpleGrid columns={[1, 1, 2, 4]} gap="1rem" margin="5em">
         {filteredProducts.map((product) => {
           return (
@@ -102,7 +96,9 @@ const ProductCard = () => {
                 variant="outline"
                 margin="1em"
                 colorScheme="orange"
-                onClick={()=>{ navigate("/product", { state: product._id })}}
+                onClick={() => {
+                  navigate("/product", { state: product._id });
+                }}
               >
                 קנה עכשיו
               </Button>

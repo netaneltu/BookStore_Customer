@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import Root from "./pages/Root";
 import Login from "./pages/login";
+import Register from "./pages/register";
 import Home from "./pages/home";
 import ProductCategory from "./pages/productCategory";
 import Product from "./pages/product";
@@ -26,10 +27,13 @@ import PriveateRoutes from "./utils/PrivateRoutes";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<Root />}>
-      <Route index element={<Login />} />
 
-      <Route element={<PriveateRoutes />}>
-        <Route path="Home" element={<Home />} />
+      {/* <Route element={<PriveateRoutes />}>
+        </Route> */}
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+        
+        <Route path="home" element={<Home />} />
         <Route path="ProductCategory" element={<ProductCategory />} />
         <Route path="Product" element={<Product />} />
 
@@ -54,7 +58,6 @@ const router = createBrowserRouter(
         <Route path="orders">
           <Route element={<Orders />} />
         </Route> */}
-      </Route>
     </Route>
   )
 );

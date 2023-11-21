@@ -70,7 +70,8 @@ const SecondaryNav = () => {
                   navigate("/productCategory", {
                     state: {
                       category: cat.category_name,
-                      heading: cat,
+                      data: cat,
+                      heading: cat.category_name,
                     },
                   });
                 }}
@@ -94,7 +95,19 @@ const SecondaryNav = () => {
                   <Box width="100%" bg="#5C0505" height="20em">
                     {cat.subcategories.map((c) => {
                       return (
-                        <MenuItem color="#DDA773" bg="#5C0505">
+                        <MenuItem
+                          onClick={() => {
+                            navigate("/productCategory", {
+                              state: {
+                                data: c,
+                                heading: c.category_name,
+                                category: cat.category_name,
+                              },
+                            });
+                          }}
+                          color="#DDA773"
+                          bg="#5C0505"
+                        >
                           {c.category_name}
                         </MenuItem>
                       );

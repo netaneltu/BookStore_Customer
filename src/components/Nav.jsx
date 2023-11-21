@@ -22,6 +22,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
 import { Link as rl } from "react-router-dom";
+import login from "../pages/login";
 
 const Nav = () => {
   const navigate = useNavigate();
@@ -45,10 +46,10 @@ const Nav = () => {
         }
       );
 
-      console.log(data);
       navigate("/productCategory", {
-        state: {searchResulteId:data, heading: `תוצאות חיפוש: ${searchValue}` },
+        state: { data: data, heading: `תוצאות חיפוש: ${searchValue}` },
       });
+      setSearchValue("");
     } catch (error) {
       console.log(error);
     }
@@ -107,11 +108,13 @@ const Nav = () => {
               p={7}
               placeholder="מה תרצו לקנות היום?"
               onChange={handleSearchInput}
+              value={searchValue}
             />
             <InputLeftElement>
               <Box mt="5" ml="5" as="button">
                 <BiSearchAlt
                   onClick={handleSearch}
+                  type="submit"
                   color="black"
                   size="2rem"
                 ></BiSearchAlt>
@@ -120,8 +123,12 @@ const Nav = () => {
           </InputGroup>
         </Box>
 
-        <Box as={rl} to="/account">
-          <BsFillPersonFill color="black" size="2rem"></BsFillPersonFill>
+        <Box as={rl} to="/login">
+          <BsFillPersonFill
+           
+            color="black"
+            size="2rem"
+          ></BsFillPersonFill>
         </Box>
         <Box as={rl} to="/cart">
           <AiOutlineShoppingCart
