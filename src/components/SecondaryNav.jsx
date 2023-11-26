@@ -33,6 +33,10 @@ const SecondaryNav = () => {
     setopenMenu(id);
   };
 
+  const navigateToProduct = (p) => {
+    navigate("/product", { state: p._id });
+  };
+
   const handleMouseLeave = () => {
     timerRef.current = window.setTimeout(() => {
       setopenMenu("");
@@ -123,6 +127,9 @@ const SecondaryNav = () => {
                             overflow="visible "
                             variant="unstyled"
                             p="10%"
+                            onClick={() => {
+                              navigateToProduct(p);
+                            }}
                           >
                             <Image
                               boxSize="80px"

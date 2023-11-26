@@ -43,12 +43,9 @@ const ProductCard = () => {
               }
             }
           } else if (category.products) {
-            console.log(category.products);
-            console.log(allProductsAray);
 
             for (let i = 0; i < category.products.length; i++) {
               if (product._id === category.products[i]._id) {
-                console.log(category.products[i]._id);
                 return product;
               }
             }

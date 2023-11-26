@@ -11,6 +11,7 @@ import Register from "./pages/register";
 import Home from "./pages/home";
 import ProductCategory from "./pages/productCategory";
 import Product from "./pages/product";
+import User from "./pages/user";
 // import Dashboard from "./pages/private/Dashboard";
 // import Products from "./pages/private/Products/Products";
 // import Orders from "./pages/private/Orders/Orders";
@@ -33,9 +34,14 @@ const router = createBrowserRouter(
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         
+        <Route index  element={<Home />} />
         <Route path="home" element={<Home />} />
         <Route path="ProductCategory" element={<ProductCategory />} />
         <Route path="Product" element={<Product />} />
+
+        <Route element={<PriveateRoutes />}>
+          <Route path="user" element={<User />} />
+          </Route>
 
         {/* <Route path="dashboard" element={<Dashboard />} /> */}
 

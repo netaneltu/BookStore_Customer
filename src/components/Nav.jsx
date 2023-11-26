@@ -26,6 +26,8 @@ import login from "../pages/login";
 
 const Nav = () => {
   const navigate = useNavigate();
+  const { user, setUser } = useContext(AuthContext);
+  console.log(user);
 
   // const { manager, setManager } = useContext(AuthContext);
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
@@ -54,30 +56,27 @@ const Nav = () => {
       console.log(error);
     }
   };
-
-  const handleLogout = async () => {
+console.log(cookies);
+  
+  const handleLogout = async (e) => {
+  
     try {
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_SERVER_URL}/users/managers/logout`
+      const  response  = await axios.post(
+        `${import.meta.env.VITE_SERVER_URL}/users/customers/logout`,
       );
+      location.reload()
+      
+      
 
-      toast.success(data.message, {
-        position: "top-center",
-        autoClose: 2000,
-        theme: "light",
-      });
-
-      setTimeout(() => {
-        removeCookie("token");
-        setManager(null);
-      }, 3000);
+      removeCookie("token");
+      setManager(null);
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.error, {
-        position: "top-center",
-        autoClose: 2000,
-        theme: "light",
-      });
+      // toast.error(error.response.data.error, {
+      //   position: "top-center",
+      //   autoClose: 2000,
+      //   theme: "light",
+      // });
     }
   };
 
@@ -123,13 +122,6 @@ const Nav = () => {
           </InputGroup>
         </Box>
 
-        <Box as={rl} to="/login">
-          <BsFillPersonFill
-           
-            color="black"
-            size="2rem"
-          ></BsFillPersonFill>
-        </Box>
         <Box as={rl} to="/cart">
           <AiOutlineShoppingCart
             color="black"
@@ -139,6 +131,32 @@ const Nav = () => {
         <Box as={rl} to="/mail">
           <BsEnvelopeAtFill color="black" size="2rem"></BsEnvelopeAtFill>
         </Box>
+        {user ? (
+          <Box as={rl} to="/user">
+            <BsFillPersonFill color="black" size="2rem"></BsFillPersonFill>
+          </Box>
+        ) : (
+          <Button
+            variant="outline"
+            borderColor="black"
+            color="black"
+            as={rl}
+            to="/login"
+          >
+            כניסה
+          </Button>
+        )}
+        {user && (
+          <Button
+            onClick={handleLogout}
+            variant="outline"
+            borderColor="black"
+            color="black"
+           
+          >
+            התנתק
+          </Button>
+        )}
       </Flex>
     </div>
   );

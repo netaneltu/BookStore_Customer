@@ -47,7 +47,9 @@ const product = () => {
     };
     getProductById();
   }, []);
-  console.log(productData);
+  const addToCart=()=>{
+    
+  }
   return (
     <Center>
       <Card
@@ -127,6 +129,7 @@ const product = () => {
                 variant="outline"
                 colorScheme="black"
                 marginRight="2em"
+                onClick={() => addToCart()}
               >
                 הוסף לעגלה
               </Button>

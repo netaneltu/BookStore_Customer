@@ -20,21 +20,17 @@ import { ThemeProvider, createTheme } from "@mui/material";
 
 const SaleCarousel = () => {
   const theme = createTheme({
-    
     palette: {
       primary: {
         main: "#795548",
       },
-      
     },
   });
 
   return (
     <ThemeProvider theme={theme}>
       <Carousel
-      
         additionalTransfrom={0}
-        
         autoPlay
         autoPlaySpeed={3000}
         centerMode={false}
@@ -96,17 +92,18 @@ const SaleCarousel = () => {
                 height: 300,
                 maxWidth: 250,
                 borderRadius: 2,
-               
-                
               }}
-              
             >
               <CardMedia
                 component="img"
                 alt={product.product_name}
-                sx={{ minHeight:"8em" ,padding: "0em 4em 0 4em", objectFit: "fill" }}
+                sx={{
+                  minHeight: "6em",
+                  padding: "0em 4em 0 4em",
+                  objectFit: "fill",
+                }}
                 image={product.product_image}
-                _hover={{transform:"scale(1.2)"}}
+                _hover={{ transform: "scale(1.2)" }}
               />
               <CardContent>
                 <Typography gutterBottom variant="subtitle1" component="div">
@@ -119,7 +116,7 @@ const SaleCarousel = () => {
                 >{` ${product.product_price} ₪`}</Typography>
               </CardContent>
               <CardActions className="parentFlexSplit" disableSpacing>
-                <Button  color="primary" size="medium" variant="outlined">
+                <Button color="primary" size="medium" variant="outlined">
                   קנה עכשיו
                 </Button>
               </CardActions>

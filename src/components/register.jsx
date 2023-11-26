@@ -23,7 +23,6 @@ import { AuthContext } from "../context/AuthContextProvider";
 import { Navigate, useNavigate } from "react-router-dom";
 import Footer from "./footer";
 
-
 import { useCookies } from "react-cookie";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -34,37 +33,53 @@ const passwordregex = /^(?=.*[A-Z]).{6,12}$$/;
 const register = () => {
   const [enterdName, setEnteredName] = useState("");
   const { user, setUser } = useContext(AuthContext);
-  const [enterdPassword, setEnteredPassword] = useState("");
   const [emailIsError, setEmailIsError] = useState(false);
   const [passwordIsError, setPasswordIsErrorr] = useState(false);
   const [message, setMessage] = useState("");
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [loading, setLoading] = useState(false);
 
+  const [values, setValues] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+    city: "",
+    street: "",
+    building: "",
+    apartment: "",
+    phone_number:""
+  });
+
   // password validation
   const passwordInputChangeHandler = (event) => {
-    setEnteredPassword(event.target.value);
-    if (passwordregex.test(enterdPassword)) {
+    handleChangeInput(event);
+    if (passwordregex.test(event.target.value)) {
       setPasswordIsErrorr(false);
     }
   };
   const passwordInputBlureHandler = (e) => {
-    setEnteredPassword(e.target.value);
-    setPasswordIsErrorr(!passwordregex.test(enterdPassword));
+    setPasswordIsErrorr(!passwordregex.test(values.password));
   };
 
   //
   // Email Validation
   const nameInputChangeHandler = (event) => {
-    setEnteredName(event.target.value);
-    if (emailregex.test(enterdName)) {
+    handleChangeInput(event);
+    if (emailregex.test(event.target.value)) {
       setEmailIsError(false);
     }
   };
 
   const nameInputBlureHandler = (e) => {
-    setEnteredName(e.target.value);
-    setEmailIsError(!emailregex.test(enterdName));
+    handleChangeInput(e);
+    setEmailIsError(!emailregex.test(values.email));
+  };
+
+  //updating values
+  const handleChangeInput = (e) => {
+    setValues({ ...values, [e.target.id]: e.target.value });
+    console.log(values);
   };
 
   useEffect(() => {
@@ -82,28 +97,30 @@ const register = () => {
   const submithandler = async (e) => {
     setLoading(true);
     e.preventDefault();
-    setEnteredName(email.value);
-    setEnteredPassword(password.value);
-    setEmailIsError(!emailregex.test(enterdName));
+    console.log(values);
+
     try {
-      if (emailIsError) {
-        setMessage("Please enter a valid email");
-        return;
-      }
-
-      const response = await axios.post(
-        `${import.meta.env.VITE_SERVER_URL}/users/customers/login`,
-        {
-          email: enterdName,
-          password: enterdPassword,
-        }
-      );
-      const data = response.data;
-      console.log(data);
-      // setLoggedUser(data.user);
-      setCookie("token", data.access_token, { path: "/", maxAge: 10800 });
-
-      console.log(data);
+     
+        const response = await axios.post(
+          `${import.meta.env.VITE_SERVER_URL}/users/customers/register`,
+          {
+            first_name: values.first_name,
+            last_name: values.last_name,
+            email: values.email,
+            password: values.password,
+            user_address: {
+              city: values.city,
+              street: values.street,
+              building: values.building,
+              apartment: values.apartment,
+            },
+            phone_number:values.phone_number
+          }
+        );
+        const data = response.data;
+        console.log(data);
+        // setLoggedUser(data.user);
+      
     } catch (error) {
       console.log(error);
     } finally {
@@ -116,108 +133,156 @@ const register = () => {
 
   return (
     <>
-    <Container bgColor="blue" w="100%" borderRadius={20} mt={20} p={15}>
-      <VStack
-        rowGap={5}
-        borderRadius={20}
-        w="90%"
-        h="90%"
-        bg="#E8DBC9"
-        alignItems="self-center"
-        p={10}
-      >
-        <VStack>
-          <Heading>הרשמה</Heading>
-          <Text>
-          אם יש לך חשבון  <Link href="/login" fontWeight='semibold' >היכנס כאן</Link>
-          </Text>
-        </VStack>
-        <FormControl>
+      <Container maxW="3xl" w="100%" borderRadius={20} mt={20} p={15}>
+        <VStack
+          rowGap={5}
+          borderRadius={20}
+          w="90%"
+          h="90%"
+          bg="#E8DBC9"
+          alignItems="self-center"
+          p={10}
+        >
+          <VStack>
+            <Heading>הרשמה</Heading>
+            <Text>
+              אם יש לך חשבון{" "}
+              <Link href="/login" fontWeight="semibold">
+                היכנס כאן
+              </Link>
+            </Text>
+          </VStack>
+
           <form onSubmit={submithandler}>
             <SimpleGrid columns={2} columnGap={4} rowGap={5} w="full">
               <GridItem colSpan={1}>
-                <FormLabel>שם מלא</FormLabel>
-                <Input
-                  type="text"
-                  id="name"
-                  // onBlur={nameInputBlureHandler}
-                  // onChange={nameInputChangeHandler}
-                  variant="filled"
-                  placeholder="ישראל ישראלי"
-                  // isInvalid={emailIsError}
-                />
+                <FormControl isRequired>
+                  <FormLabel>שם פרטי</FormLabel>
+                  <Input
+                    type="text"
+                    id="first_name"
+                    // onBlur={nameInputBlureHandler}
+                    onChange={handleChangeInput}
+                    variant="filled"
+                    placeholder="ישראל "
+                    // isInvalid={emailIsError}
+                  />
+                </FormControl>
               </GridItem>
               <GridItem colSpan={1}>
-                <FormLabel isRequired>מייל</FormLabel>
-                <Input
-                  type="email"
-                  id="email"
-                  onBlur={nameInputBlureHandler}
-                  onChange={nameInputChangeHandler}
-                  variant="filled"
-                  placeholder="israel@gmail.com"
-                  isInvalid={emailIsError}
-                />
+                <FormControl isRequired>
+                  <FormLabel>שם משפחה</FormLabel>
+                  <Input
+                    type="text"
+                    id="last_name"
+                    // onBlur={nameInputBlureHandler}
+                    onChange={handleChangeInput}
+                    variant="filled"
+                    placeholder=" ישראלי"
+                    // isInvalid={emailIsError}
+                  />
+                </FormControl>
+              </GridItem>
+
+              <GridItem colSpan={1}>
+                <FormControl isRequired>
+                  <FormLabel isRequired>מייל</FormLabel>
+                  <Input
+                    type="email"
+                    id="email"
+                    onBlur={nameInputBlureHandler}
+                    onChange={nameInputChangeHandler}
+                    variant="filled"
+                    placeholder="israel@gmail.com"
+                    isInvalid={emailIsError}
+                  />
+                </FormControl>
               </GridItem>
               <GridItem colSpan={1}>
-                <FormLabel isRequired>סיסמא</FormLabel>
-                <Input
-                  type="password"
-                  id="password"
-                  onBlur={passwordInputBlureHandler}
-                  onChange={passwordInputChangeHandler}
-                  variant="filled"
-                  placeholder=""
-                  isInvalid={passwordIsError}
-                />
+                <FormControl isRequired>
+                  <FormLabel>סיסמא</FormLabel>
+                  <Input
+                    type="password"
+                    id="password"
+                    onBlur={passwordInputBlureHandler}
+                    onChange={passwordInputChangeHandler}
+                    variant="filled"
+                    placeholder=""
+                    isInvalid={passwordIsError}
+                  />
+                </FormControl>
               </GridItem>
               <GridItem colSpan={1}>
-                <FormLabel>מייל</FormLabel>
-                <Input
-                  type="email"
-                  id="email"
-                  onBlur={nameInputBlureHandler}
-                  onChange={nameInputChangeHandler}
-                  variant="filled"
-                  placeholder="israel@gmail.com"
-                  isInvalid={emailIsError}
-                />
+                <FormControl isRequired>
+                  <FormLabel> מספר פלאפון</FormLabel>
+                  <Input
+                    type="number"
+                    id="phone_number"
+                    // onBlur={nameInputBlureHandler}
+                    onChange={handleChangeInput}
+                    variant="filled"
+                    placeholder=" ישראלי"
+                    // isInvalid={emailIsError}
+                  />
+                </FormControl>
+              </GridItem>
+              <GridItem colSpan={2}>
+                <Heading size="md"> כתובת מגורים</Heading>
+              </GridItem>
+
+              <GridItem colSpan={1}>
+                <FormControl isRequired>
+                  <FormLabel>עיר</FormLabel>
+                  <Input
+                    type="text"
+                    id="city"
+                    // onBlur={nameInputBlureHandler}
+                    onChange={handleChangeInput}
+                    variant="filled"
+                    // isInvalid={emailIsError}
+                  />
+                </FormControl>
               </GridItem>
               <GridItem colSpan={1}>
-                <FormLabel>מייל</FormLabel>
-                <Input
-                  type="email"
-                  id="email"
-                  onBlur={nameInputBlureHandler}
-                  onChange={nameInputChangeHandler}
-                  variant="filled"
-                  placeholder="israel@gmail.com"
-                  isInvalid={emailIsError}
-                />
+                <FormControl isRequired>
+                  <FormLabel>רחוב</FormLabel>
+                  <Input
+                    type="text"
+                    id="street"
+                    // onBlur={nameInputBlureHandler}
+                    onChange={handleChangeInput}
+                    variant="filled"
+                    // isInvalid={emailIsError}
+                  />
+                </FormControl>
+              </GridItem>
+
+              <GridItem colSpan={1}>
+                <FormControl isRequired>
+                  <FormLabel>מספר בית</FormLabel>
+                  <Input
+                    type="number"
+                    id="building"
+                    // onBlur={nameInputBlureHandler}
+                    onChange={handleChangeInput}
+                    variant="filled"
+                    // isInvalid={emailIsError}
+                  />
+                </FormControl>
               </GridItem>
               <GridItem colSpan={1}>
-                <FormLabel>מייל</FormLabel>
-                <Input
-                  type="email"
-                  id="email"
-                  onBlur={nameInputBlureHandler}
-                  onChange={nameInputChangeHandler}
-                  variant="filled"
-                  placeholder="israel@gmail.com"
-                  isInvalid={emailIsError}
-                />
-              </GridItem>
-              <GridItem colSpan={1}>
-                <FormLabel>מייל</FormLabel>
-                <Input
-                  type="email"
-                  id="email"
-                  onBlur={nameInputBlureHandler}
-                  onChange={nameInputChangeHandler}
-                  variant="filled"
-                  placeholder="israel@gmail.com"
-                  isInvalid={emailIsError}
-                />
+                <FormControl>
+                  <FormLabel>מספר דירה (אופציונלי)</FormLabel>
+                  <Input
+                    type="text"
+                    id="apartment"
+                    // onBlur={nameInputBlureHandler}
+                    onChange={handleChangeInput}
+                    variant="filled"
+
+                    // isInvalid={emailIsError}
+                  />
+                </FormControl>
               </GridItem>
               <GridItem align="center" colSpan={2}>
                 <Button bg="white" type="submit">
@@ -242,13 +307,10 @@ const register = () => {
               {/* <LoginButton>log in</LoginButton> */}
             </SimpleGrid>
           </form>
-        </FormControl>
-      </VStack>
-      
-    </Container>
-    <Footer />
+        </VStack>
+      </Container>
+      <Footer />
     </>
-    
   );
 };
 

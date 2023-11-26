@@ -99,13 +99,14 @@ const login = () => {
         }
       );
       const data = response.data;
-      console.log(data);
       // setLoggedUser(data.user);
       setCookie("token", data.access_token, { path: "/", maxAge: 10800 });
 
-      console.log(data);
     } catch (error) {
       console.log(error);
+      setMessage("email or password are incurrect")
+      
+      
     } finally {
       setLoading(false);
     }
