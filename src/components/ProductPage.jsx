@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import { useState, useContext } from "react";
 import { useLocation } from "react-router-dom";
+import { CartContext } from "../context/CartContext";
+
 import axios from "axios";
 import {
   ImBarcode,
@@ -30,7 +32,9 @@ import { useEffect } from "react";
 const product = () => {
   const { state } = useLocation();
   const [productData, setProductData] = useState({});
-  const [quantity, setQuantity] = useState(1);
+  const [qty, setQty] = useState(1);
+
+  const { cartItems, setCartItems } = useContext(CartContext);
 
   useEffect(() => {
     const getProductById = async () => {
@@ -47,9 +51,26 @@ const product = () => {
     };
     getProductById();
   }, []);
-  const addToCart=()=>{
-    
-  }
+
+  const addToCart = (item) => {
+    const existingItem = cartItems.find(
+      (cartItem) => cartItem._id === item._id
+    );
+
+    if (existingItem) {
+      const updatedCartItems = cartItems.map((cartItem) => {
+        if (cartItem._id === item._id) {
+          return { ...cartItem, qty: cartItem.qty + qty };
+        }
+        return cartItem;
+      });
+
+      setCartItems(updatedCartItems);
+    } else {
+      setCartItems((prevItems) => [...prevItems, { ...item, qty: qty }]);
+    }
+  };
+
   return (
     <Center>
       <Card
@@ -107,19 +128,19 @@ const product = () => {
               <HStack>
                 <ImPlus
                   onClick={() => {
-                    if (quantity < 20) {
-                      setQuantity(quantity + 1);
-                      console.log(quantity);
+                    if (qty < 20) {
+                      setQty(qty + 1);
+                      console.log(qty);
                     }
                   }}
                 />
-                <NumberInput value={quantity} defaultValue={1} w="5em">
+                <NumberInput value={qty} defaultValue={1} w="5em">
                   <NumberInputField paddingRight="2rem" borderRadius="20px" />
                 </NumberInput>
                 <ImMinus
                   onClick={() => {
-                    if (quantity > 1) setQuantity(quantity - 1);
-                    console.log(quantity);
+                    if (qty > 1) setQty(qty - 1);
+                    console.log(qty);
                   }}
                 />
               </HStack>
@@ -129,7 +150,7 @@ const product = () => {
                 variant="outline"
                 colorScheme="black"
                 marginRight="2em"
-                onClick={() => addToCart()}
+                onClick={() => addToCart(productData)}
               >
                 הוסף לעגלה
               </Button>

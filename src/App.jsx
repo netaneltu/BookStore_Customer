@@ -12,6 +12,7 @@ import Home from "./pages/home";
 import ProductCategory from "./pages/productCategory";
 import Product from "./pages/product";
 import User from "./pages/user";
+import Cart from "./pages/cart";
 // import Dashboard from "./pages/private/Dashboard";
 // import Products from "./pages/private/Products/Products";
 // import Orders from "./pages/private/Orders/Orders";
@@ -28,24 +29,24 @@ import PriveateRoutes from "./utils/PrivateRoutes";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<Root />}>
-
       {/* <Route element={<PriveateRoutes />}>
         </Route> */}
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
-        
-        <Route index  element={<Home />} />
-        <Route path="home" element={<Home />} />
-        <Route path="ProductCategory" element={<ProductCategory />} />
-        <Route path="Product" element={<Product />} />
+      <Route path="login" element={<Login />} />
+      <Route path="register" element={<Register />} />
 
-        <Route element={<PriveateRoutes />}>
-          <Route path="user" element={<User />} />
-          </Route>
+      <Route index element={<Home />} />
+      <Route path="home" element={<Home />} />
+      <Route path="ProductCategory" element={<ProductCategory />} />
+      <Route path="Product" element={<Product />} />
 
-        {/* <Route path="dashboard" element={<Dashboard />} /> */}
+      <Route element={<PriveateRoutes />}>
+        <Route path="user" element={<User />} />
+        <Route path="cart" element={<Cart />} />
+      </Route>
 
-        {/* <Route path="products">
+      {/* <Route path="dashboard" element={<Dashboard />} /> */}
+
+      {/* <Route path="products">
           <Route index element={<Products />} />
           <Route path="/products/add" element={<AddProduct />} />
           <Route path="/products/edit" element={<EditProduct />} />
