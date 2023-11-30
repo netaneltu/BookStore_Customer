@@ -11,6 +11,8 @@ import {
   Spinner,
   Link,
   Container,
+  Alert,
+  AlertIcon,
   FormErrorMessage,
   FormHelperText,
   Flex,
@@ -22,7 +24,6 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContextProvider";
 import { Navigate, useNavigate } from "react-router-dom";
 import Footer from "../components/footer";
-
 
 import { useCookies } from "react-cookie";
 import { useState } from "react";
@@ -38,6 +39,8 @@ const login = () => {
   const [emailIsError, setEmailIsError] = useState(false);
   const [passwordIsError, setPasswordIsErrorr] = useState(false);
   const [message, setMessage] = useState("");
+  const [messageStatus, setMessageStatus] = useState();
+
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [loading, setLoading] = useState(false);
 
@@ -70,10 +73,12 @@ const login = () => {
   useEffect(() => {
     if (emailIsError) {
       setMessage("Please enter a valid email");
+      setMessageStatus("error");
     } else if (passwordIsError) {
       setMessage(
         "Please enter a valid password (contains at least one uppercase letter and has a length between 6 and 12 characters)"
       );
+      setMessageStatus("error");
     } else {
       setMessage("");
     }
@@ -88,6 +93,8 @@ const login = () => {
     try {
       if (emailIsError) {
         setMessage("Please enter a valid email");
+        setMessageStatus("error");
+
         return;
       }
 
@@ -99,14 +106,17 @@ const login = () => {
         }
       );
       const data = response.data;
-      // setLoggedUser(data.user);
-      setCookie("token", data.access_token, { path: "/", maxAge: 10800 });
 
+      // setLoggedUser(data.user);
+      setMessage("כניסה אושרה");
+      setMessageStatus("success");
+      setTimeout(() => {
+        setCookie("token", data.access_token, { path: "/", maxAge: 10800 });
+      }, 2000);
     } catch (error) {
       console.log(error);
-      setMessage("email or password are incurrect")
-      
-      
+      setMessage("email or password are incurrect");
+      setMessageStatus("error");
     } finally {
       setLoading(false);
     }
@@ -117,79 +127,87 @@ const login = () => {
 
   return (
     <>
-    <Container borderRadius={20} mt={20} p={15}>
-      <VStack
-        rowGap={5}
-        borderRadius={20}
-        w="90%"
-        h="90%"
-        bg="#E8DBC9"
-        alignItems="self-center"
-        p={10}
-      >
-        <VStack>
-          <Heading>כניסה</Heading>
-          <Text>
-          אם אין לך חשבון  <Link href="/register" fontWeight='semibold' >הירשם כאן</Link>
-          </Text>
-        </VStack>
-        <FormControl>
-          <form onSubmit={submithandler}>
-            <SimpleGrid rowGap={6} w="full">
-              <GridItem colSpan={2}>
-                <FormLabel>מייל</FormLabel>
-                <Input
-                  type="email"
-                  id="email"
-                  onBlur={nameInputBlureHandler}
-                  onChange={nameInputChangeHandler}
-                  variant="filled"
-                  placeholder="israel@gmail.com"
-                  isInvalid={emailIsError}
-                />
-              </GridItem>
-              <GridItem colSpan={2}>
-                <FormLabel>סיסמא</FormLabel>
-                <Input
-                  type="password"
-                  id="password"
-                  onBlur={passwordInputBlureHandler}
-                  onChange={passwordInputChangeHandler}
-                  variant="filled"
-                  placeholder="israeli"
-                  isInvalid={passwordIsError}
-                />
-              </GridItem>
-              <GridItem align="center" colSpan={2}>
-                <Button bg="white" type="submit">
-                  כניסה
-                </Button>
-              </GridItem>
-              {(emailIsError || passwordIsError || Error) && (
+      <Container borderRadius={20} mt={20} p={15}>
+        <VStack
+          rowGap={5}
+          borderRadius={20}
+          w="90%"
+          h="90%"
+          bg="#E8DBC9"
+          alignItems="self-center"
+          p={10}
+        >
+          <VStack>
+            <Heading>כניסה</Heading>
+            <Text>
+              אם אין לך חשבון{" "}
+              <Link href="/register" fontWeight="semibold">
+                הירשם כאן
+              </Link>
+            </Text>
+          </VStack>
+          <FormControl>
+            <form onSubmit={submithandler}>
+              <SimpleGrid rowGap={6} w="full">
+                <GridItem colSpan={2}>
+                  <FormLabel>מייל</FormLabel>
+                  <Input
+                    type="email"
+                    id="email"
+                    onBlur={nameInputBlureHandler}
+                    onChange={nameInputChangeHandler}
+                    variant="filled"
+                    placeholder="israel@gmail.com"
+                    isInvalid={emailIsError}
+                  />
+                </GridItem>
+                <GridItem colSpan={2}>
+                  <FormLabel>סיסמא</FormLabel>
+                  <Input
+                    type="password"
+                    id="password"
+                    onBlur={passwordInputBlureHandler}
+                    onChange={passwordInputChangeHandler}
+                    variant="filled"
+                    placeholder="israeli"
+                    isInvalid={passwordIsError}
+                  />
+                </GridItem>
+                <GridItem align="center" colSpan={2}>
+                  <Button bg="white" type="submit">
+                    כניסה
+                  </Button>
+                </GridItem>
+                {/* {(emailIsError || passwordIsError || Error) && (
                 <Text fontSize="md" color="red">
                   {message}
                 </Text>
-              )}
-              {loading && (
-                <Spinner
-                  alignSelf="center"
-                  thickness="4px"
-                  speed="0.65s"
-                  emptyColor="gray.200"
-                  color="blue.500"
-                  size="md"
-                />
-              )}
-              {/* <LoginButton>log in</LoginButton> */}
-            </SimpleGrid>
-          </form>
-        </FormControl>
-      </VStack>
-      
-    </Container>
-    <Footer />
+              )} */}
+                {message && (
+                  <Alert width="100%" status={messageStatus}>
+                    <AlertIcon />
+                    {message}
+                  </Alert>
+                )}
+                 <GridItem colSpan={2}>
+                {loading && (
+                  <Spinner
+                    alignSelf="center"
+                    thickness="4px"
+                    speed="0.65s"
+                    emptyColor="gray.200"
+                    color="blue.500"
+                    size="md"
+                  />
+                )}
+                </GridItem>
+              </SimpleGrid>
+            </form>
+          </FormControl>
+        </VStack>
+      </Container>
+      <Footer />
     </>
-    
   );
 };
 

@@ -13,35 +13,75 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { CartContext } from "../context/CartContext";
+import { AuthContext } from "../context/AuthContextProvider";
+import axios from "axios";
+
 import { useState, useContext } from "react";
 import { useEffect } from "react";
 
 const cart = () => {
   const { cartItems, setCartItems } = useContext(CartContext);
   const [sumPrice, setSumPrice] = useState(0);
+  const { user, setUser } = useContext(AuthContext);
 
-  useEffect(()=>{
-    cartItems.map((cartItem)=>{
-        return (setSumPrice(prev=> prev + cartItem.product_price))
-    })
-  },[])
+  const [userData, setUserData] = useState();
+  useEffect(() => {
+    const getUserInfo = async () => {
+      try {
+        const { data } = await axios.get(
+          `${import.meta.env.VITE_SERVER_URL}/users/customers/get_by_id/${
+            user._id
+          }`
+        );
+        setUserData(data.user);
+        console.log(data.user);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getUserInfo();
+  }, []);
 
-  const setOrder= async()=>{
-    try {
-      const response = await axios.post( 
-      `${
-        import.meta.env.VITE_SERVER_URL
-      }/users/customers/get_by_id/64955822d0a87d860970b67d`
+  useEffect(() => {
+    const sumPrice = cartItems.reduce(
+      (total, item) => total + item.qty * item.product_price,
+      0
     );
-    setUserData(data.user)
-    console.log(data);
-      
-    } catch (error) {
-      
-    }
 
-    alert("Your order has been placed")
-  }
+    setSumPrice(sumPrice);
+   
+  }, []);
+
+  const setOrder = async () => {
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_SERVER_URL}/orders/add`,
+        {
+          user: userData._id,
+          customer_details: {
+            customer_name: userData.first_name,
+            customer_email: userData.email,
+            customer_phone: userData.phone_number,
+            customer_address: {
+              city: userData.user_address.city,
+              street: userData.user_address.street,
+              building: userData.user_address.building,
+            },
+          },
+          products: cartItems.map((pr) => {
+            return {
+              product: pr._id,
+              RTP: pr.product_price,
+              quantity: pr.qty,
+            };
+          }),
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   console.log(cartItems);
   console.log(sumPrice);
@@ -58,7 +98,7 @@ const cart = () => {
             </Tr>
           </Thead>
           <Tbody paddingInline="2px">
-            {cartItems.map((cartItem, index) => {
+            {cartItems.map((cartItem) => {
               return (
                 <Tr>
                   <Td>{cartItem.product_name}</Td>
@@ -69,15 +109,21 @@ const cart = () => {
             })}
           </Tbody>
           <Tfoot>
-      <Tr>
-        <Th>מחיר כולל</Th>
-        <Th></Th>
-        <Th isNumeric>{sumPrice}₪</Th>
-      </Tr>
-    </Tfoot>
+            <Tr>
+              <Th>מחיר כולל</Th>
+              <Th></Th>
+              <Th isNumeric>{sumPrice}₪</Th>
+            </Tr>
+          </Tfoot>
         </Table>
-        <Button onClick={setOrder} colorScheme='teal'  marginTop="2em" alignSelf="center">בצע הזמנה</Button>
-
+        <Button
+          onClick={setOrder}
+          colorScheme="teal"
+          marginTop="2em"
+          alignSelf="center"
+        >
+          בצע הזמנה
+        </Button>
       </TableContainer>
     </Center>
   );

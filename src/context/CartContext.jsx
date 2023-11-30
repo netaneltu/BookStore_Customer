@@ -1,3 +1,4 @@
+import axios from "axios";
 import { createContext, useState, useEffect } from "react";
 
 export const CartContext = createContext();
@@ -14,7 +15,6 @@ export default function CartProvider({ children }) {
 
   console.log(cartItems);
   useEffect(() => {
-    
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 

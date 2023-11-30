@@ -31,7 +31,7 @@ function AuthContextProvider({ children }) {
         console.log(error);
       }
     };
-    
+
     if (cookies.token) {
       authUser();
     }

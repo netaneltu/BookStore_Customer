@@ -32,7 +32,7 @@ const userInfo = () => {
         const { data } = await axios.get(
           `${
             import.meta.env.VITE_SERVER_URL
-          }/users/customers/get_by_id/64955822d0a87d860970b67d`
+          }/users/customers/get_by_id/${user._id}`
         );
         setUserData(data.user)
         console.log(data);
@@ -42,7 +42,7 @@ const userInfo = () => {
     }
 };
     getUserInfo();
-}, []);
+}, [user]);
   const changeUserInfo=()=>{
       navigate("/home")
       console.log("hi");
