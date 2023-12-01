@@ -11,17 +11,12 @@ import {
   Spinner,
   Link,
   Container,
-  FormErrorMessage,
-  FormHelperText,
-  Flex,
-  Center,
 } from "@chakra-ui/react";
 import axios from "axios";
-// import LoginButton from "../components/Auth0";
 import { useContext } from "react";
-import { AuthContext } from "../context/AuthContextProvider";
+import { AuthContext } from "../../context/AuthContextProvider";
 import { Navigate, useNavigate } from "react-router-dom";
-import Footer from "./footer";
+import Footer from "../global/footer";
 
 import { useCookies } from "react-cookie";
 import { useState } from "react";
@@ -31,12 +26,10 @@ const emailregex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 const passwordregex = /^(?=.*[A-Z]).{6,12}$$/;
 
 const register = () => {
-  const [enterdName, setEnteredName] = useState("");
   const { user, setUser } = useContext(AuthContext);
   const [emailIsError, setEmailIsError] = useState(false);
   const [passwordIsError, setPasswordIsErrorr] = useState(false);
   const [message, setMessage] = useState("");
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [loading, setLoading] = useState(false);
 
   const [values, setValues] = useState({
@@ -48,7 +41,7 @@ const register = () => {
     street: "",
     building: "",
     apartment: "",
-    phone_number:""
+    phone_number: "",
   });
 
   // password validation
@@ -79,7 +72,6 @@ const register = () => {
   //updating values
   const handleChangeInput = (e) => {
     setValues({ ...values, [e.target.id]: e.target.value });
-    console.log(values);
   };
 
   useEffect(() => {
@@ -97,30 +89,26 @@ const register = () => {
   const submithandler = async (e) => {
     setLoading(true);
     e.preventDefault();
-    console.log(values);
 
     try {
-     
-        const response = await axios.post(
-          `${import.meta.env.VITE_SERVER_URL}/users/customers/register`,
-          {
-            first_name: values.first_name,
-            last_name: values.last_name,
-            email: values.email,
-            password: values.password,
-            user_address: {
-              city: values.city,
-              street: values.street,
-              building: values.building,
-              apartment: values.apartment,
-            },
-            phone_number:values.phone_number
-          }
-        );
-        const data = response.data;
-        console.log(data);
-        // setLoggedUser(data.user);
-      
+      const response = await axios.post(
+        `${import.meta.env.VITE_SERVER_URL}/users/customers/register`,
+        {
+          first_name: values.first_name,
+          last_name: values.last_name,
+          email: values.email,
+          password: values.password,
+          user_address: {
+            city: values.city,
+            street: values.street,
+            building: values.building,
+            apartment: values.apartment,
+          },
+          phone_number: values.phone_number,
+        }
+      );
+      const data = response.data;
+      // setLoggedUser(data.user);
     } catch (error) {
       console.log(error);
     } finally {
@@ -155,7 +143,7 @@ const register = () => {
 
           <form onSubmit={submithandler}>
             <SimpleGrid columns={2} columnGap={4} rowGap={5} w="full">
-              <GridItem colSpan={1}>
+              <GridItem colSpan={[2, 1]}>
                 <FormControl isRequired>
                   <FormLabel>שם פרטי</FormLabel>
                   <Input
@@ -169,7 +157,7 @@ const register = () => {
                   />
                 </FormControl>
               </GridItem>
-              <GridItem colSpan={1}>
+              <GridItem colSpan={[2, 1]}>
                 <FormControl isRequired>
                   <FormLabel>שם משפחה</FormLabel>
                   <Input
@@ -184,7 +172,7 @@ const register = () => {
                 </FormControl>
               </GridItem>
 
-              <GridItem colSpan={1}>
+              <GridItem colSpan={[2, 1]}>
                 <FormControl isRequired>
                   <FormLabel isRequired>מייל</FormLabel>
                   <Input
@@ -198,7 +186,7 @@ const register = () => {
                   />
                 </FormControl>
               </GridItem>
-              <GridItem colSpan={1}>
+              <GridItem colSpan={[2, 1]}>
                 <FormControl isRequired>
                   <FormLabel>סיסמא</FormLabel>
                   <Input
@@ -212,79 +200,68 @@ const register = () => {
                   />
                 </FormControl>
               </GridItem>
-              <GridItem colSpan={1}>
+              <GridItem colSpan={[2, 1]}>
                 <FormControl isRequired>
                   <FormLabel> מספר פלאפון</FormLabel>
                   <Input
                     type="number"
                     id="phone_number"
-                    // onBlur={nameInputBlureHandler}
                     onChange={handleChangeInput}
                     variant="filled"
                     placeholder=" ישראלי"
-                    // isInvalid={emailIsError}
                   />
                 </FormControl>
               </GridItem>
-              <GridItem colSpan={2}>
+              <GridItem colSpan={[2, 1]}>
                 <Heading size="md"> כתובת מגורים</Heading>
               </GridItem>
 
-              <GridItem colSpan={1}>
+              <GridItem colSpan={[2, 1]}>
                 <FormControl isRequired>
                   <FormLabel>עיר</FormLabel>
                   <Input
                     type="text"
                     id="city"
-                    // onBlur={nameInputBlureHandler}
                     onChange={handleChangeInput}
                     variant="filled"
-                    // isInvalid={emailIsError}
                   />
                 </FormControl>
               </GridItem>
-              <GridItem colSpan={1}>
+              <GridItem colSpan={[2, 1]}>
                 <FormControl isRequired>
                   <FormLabel>רחוב</FormLabel>
                   <Input
                     type="text"
                     id="street"
-                    // onBlur={nameInputBlureHandler}
                     onChange={handleChangeInput}
                     variant="filled"
-                    // isInvalid={emailIsError}
                   />
                 </FormControl>
               </GridItem>
 
-              <GridItem colSpan={1}>
+              <GridItem colSpan={[2, 1]}>
                 <FormControl isRequired>
                   <FormLabel>מספר בית</FormLabel>
                   <Input
                     type="number"
                     id="building"
-                    // onBlur={nameInputBlureHandler}
                     onChange={handleChangeInput}
                     variant="filled"
-                    // isInvalid={emailIsError}
                   />
                 </FormControl>
               </GridItem>
-              <GridItem colSpan={1}>
+              <GridItem colSpan={[2, 1]}>
                 <FormControl>
                   <FormLabel>מספר דירה (אופציונלי)</FormLabel>
                   <Input
                     type="text"
                     id="apartment"
-                    // onBlur={nameInputBlureHandler}
                     onChange={handleChangeInput}
                     variant="filled"
-
-                    // isInvalid={emailIsError}
                   />
                 </FormControl>
               </GridItem>
-              <GridItem align="center" colSpan={2}>
+              <GridItem align="center" colSpan={[2, 1]}>
                 <Button bg="white" type="submit">
                   הרשמה
                 </Button>

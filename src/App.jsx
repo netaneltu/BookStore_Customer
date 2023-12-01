@@ -13,6 +13,8 @@ import ProductCategory from "./pages/productCategory";
 import Product from "./pages/product";
 import User from "./pages/user";
 import Cart from "./pages/cart";
+import theme from "../src/theme/theme";
+
 // import Dashboard from "./pages/private/Dashboard";
 // import Products from "./pages/private/Products/Products";
 // import Orders from "./pages/private/Orders/Orders";
@@ -71,7 +73,7 @@ const router = createBrowserRouter(
 
 function App() {
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <RouterProvider router={router} />
     </ChakraProvider>
   );

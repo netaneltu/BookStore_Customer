@@ -23,8 +23,6 @@ const ProductCard = () => {
   const [heading, setHeading] = useState(state.heading);
 
   const category = state.data;
-  console.log(category);
-  console.log(state);
 
   useEffect(() => {
     const filteringProducts = () => {
@@ -43,7 +41,6 @@ const ProductCard = () => {
               }
             }
           } else if (category.products) {
-
             for (let i = 0; i < category.products.length; i++) {
               if (product._id === category.products[i]._id) {
                 return product;
@@ -54,7 +51,7 @@ const ProductCard = () => {
       );
     };
     filteringProducts();
-    setHeading(state.heading)
+    setHeading(state.heading);
   }, [allProductsAray, state.heading]);
 
   return (

@@ -13,7 +13,7 @@ export default function CartProvider({ children }) {
     setCartItems,
   };
 
-  console.log(cartItems);
+ 
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);

@@ -16,7 +16,8 @@ import {
   Text,
   Button,
 } from "@chakra-ui/react";
-import allCategories from "../hooks/allCategoris";
+import allCategories from "../../hooks/allCategoris";
+import { ImMenu, ImCross } from "react-icons/im";
 
 import { useNavigate } from "react-router-dom";
 
@@ -26,6 +27,7 @@ const SecondaryNav = () => {
   const categoriesArray = allCategories();
 
   const [openMenu, setopenMenu] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleMouseEnter = (id) => {
     clearTimeout(timerRef.current);
@@ -53,6 +55,17 @@ const SecondaryNav = () => {
 
   return (
     <>
+      <Box
+        onClick={() => {
+          setIsOpen(!isOpen);
+        }}
+        color="black"
+        fontSize={50}
+        top="5em"
+        display={["flex", "none", "none"]}
+      >
+        {isOpen ? <ImCross /> : <ImMenu />}
+      </Box>
       <Flex
         as="nav"
         align="center"
@@ -61,7 +74,8 @@ const SecondaryNav = () => {
         padding={4}
         bg="white"
         color="black"
-        display={["none", "flex", "flex"]}
+        display={[isOpen ? "flex" : "none", "flex"]}
+        direction={[isOpen ? "column" : "row"]}
         // direction={["row-reverse", "row", "row"]}
         mt={[20, 0, 0]}
       >

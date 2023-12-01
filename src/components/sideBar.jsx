@@ -42,10 +42,15 @@ const sideBar = () => {
             <>
               <Heading
                 alignSelf="start"
+                id={cat._id}
                 as="button"
                 onClick={() => {
                   navigate("/productCategory", {
-                    state: { heading: cat.category_name, data: cat,category:cat.category_name },
+                    state: {
+                      heading: cat.category_name,
+                      data: cat,
+                      category: cat.category_name,
+                    },
                   });
                 }}
                 padding="5px"
@@ -53,17 +58,18 @@ const sideBar = () => {
               >
                 {cat.category_name}
               </Heading>
-              {state.category === cat.category_name 
+              {state.category === cat.category_name
                 ? cat.subcategories.map((subCat) => {
                     return (
                       <>
                         <Text
+                          id={subCat._id}
                           onClick={() => {
                             navigate("/productCategory", {
                               state: {
                                 data: subCat,
                                 heading: subCat.category_name,
-                                category:cat.category_name
+                                category: cat.category_name,
                               },
                             });
                           }}

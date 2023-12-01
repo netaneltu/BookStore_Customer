@@ -18,7 +18,6 @@ const allCategories = () => {
     getAllCategoris();
   }, []);
 
-  console.log(categories);
   return categories;
 };
 

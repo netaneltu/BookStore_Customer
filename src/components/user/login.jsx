@@ -13,17 +13,11 @@ import {
   Container,
   Alert,
   AlertIcon,
-  FormErrorMessage,
-  FormHelperText,
-  Flex,
-  Center,
 } from "@chakra-ui/react";
 import axios from "axios";
-// import LoginButton from "../components/Auth0";
 import { useContext } from "react";
-import { AuthContext } from "../context/AuthContextProvider";
+import { AuthContext } from "../../context/AuthContextProvider";
 import { Navigate, useNavigate } from "react-router-dom";
-import Footer from "../components/footer";
 
 import { useCookies } from "react-cookie";
 import { useState } from "react";
@@ -189,24 +183,24 @@ const login = () => {
                     {message}
                   </Alert>
                 )}
-                 <GridItem colSpan={2}>
-                {loading && (
-                  <Spinner
-                    alignSelf="center"
-                    thickness="4px"
-                    speed="0.65s"
-                    emptyColor="gray.200"
-                    color="blue.500"
-                    size="md"
-                  />
-                )}
+                <GridItem colSpan={2}>
+                  {loading && (
+                    <Spinner
+                      alignSelf="center"
+                      thickness="4px"
+                      speed="0.65s"
+                      emptyColor="gray.200"
+                      color="blue.500"
+                      size="md"
+                    />
+                  )}
                 </GridItem>
               </SimpleGrid>
             </form>
           </FormControl>
         </VStack>
       </Container>
-      <Footer />
+      
     </>
   );
 };

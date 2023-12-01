@@ -17,6 +17,8 @@
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@fontsource/open-sans": "^5.0.17",
+    "@fontsource/raleway": "^5.0.15",
     "@mui/icons-material": "^5.14.3",
     "@mui/material": "^5.14.5",
     "@uidotdev/usehooks": "^2.1.1",

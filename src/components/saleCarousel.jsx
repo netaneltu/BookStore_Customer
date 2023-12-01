@@ -1,7 +1,6 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-// import CardBuild from './cardBuild';
-import { shadows } from "@mui/system";
+import { useNavigate } from "react-router-dom";
 
 import "./style.css";
 
@@ -19,6 +18,8 @@ import {
 import { ThemeProvider, createTheme } from "@mui/material";
 
 const SaleCarousel = () => {
+  const navigate = useNavigate();
+
   const theme = createTheme({
     palette: {
       primary: {
@@ -26,6 +27,9 @@ const SaleCarousel = () => {
       },
     },
   });
+  const navigateToProduct = (p) => {
+    navigate("/product", { state: p._id });
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -116,7 +120,14 @@ const SaleCarousel = () => {
                 >{` ${product.product_price} ₪`}</Typography>
               </CardContent>
               <CardActions className="parentFlexSplit" disableSpacing>
-                <Button color="primary" size="medium" variant="outlined">
+                <Button
+                  onClick={() => {
+                    navigateToProduct(product);
+                  }}
+                  color="primary"
+                  size="medium"
+                  variant="outlined"
+                >
                   קנה עכשיו
                 </Button>
               </CardActions>

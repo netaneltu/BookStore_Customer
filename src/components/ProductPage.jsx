@@ -23,9 +23,9 @@ import {
   Image,
   Center,
   NumberInput,
-  Box,
   HStack,
   NumberInputField,
+  Flex,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 
@@ -96,8 +96,8 @@ const product = () => {
               מחיר: ₪{productData.product_price}
             </Heading>
 
-            <HStack>
-              <HStack padding="1em">
+            <Flex direction={["column","column" ,"column","row"]} >
+              <HStack  padding="1em">
                 <ImBarcode size="3rem" />
                 <Stack spacing="0px">
                   <Text fontWeight="bold">מק"ט</Text>
@@ -118,9 +118,9 @@ const product = () => {
                   <Text>קשה</Text>
                 </Stack>
               </HStack>
-            </HStack>
+            </Flex>
 
-            {/* <Text py="2">{productData.product_description}</Text> */}
+            <Text py="2">{productData.product_description}</Text>
           </CardBody>
 
           <CardFooter>
@@ -130,7 +130,6 @@ const product = () => {
                   onClick={() => {
                     if (qty < 20) {
                       setQty(qty + 1);
-                      console.log(qty);
                     }
                   }}
                 />
@@ -140,12 +139,11 @@ const product = () => {
                 <ImMinus
                   onClick={() => {
                     if (qty > 1) setQty(qty - 1);
-                    console.log(qty);
                   }}
                 />
               </HStack>
               <Button
-                size="lg"
+                size={["md","lg"]}
                 leftIcon={<ImCart />}
                 variant="outline"
                 colorScheme="black"

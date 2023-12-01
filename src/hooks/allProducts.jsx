@@ -11,7 +11,6 @@ const allProducts = () => {
         const { data } = await axios.get(
           `${import.meta.env.VITE_SERVER_URL}/products/managers/all`
         );
-console.log(data);
         setProducts(data.products);
       } catch (error) {
         console.log(error);

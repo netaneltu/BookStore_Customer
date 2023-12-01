@@ -1,19 +1,24 @@
 import React from "react";
 
-import { Box, Flex } from "@chakra-ui/react";
+import { Helmet } from "react-helmet";
 
-import Footer from "../components/footer";
-import ProductPage from "../components/ProductPage";
-import SecondaryNav from "../components/SecondaryNav";
-import UserInfo from "../components/userInfo";
+import Footer from "../components/global/footer";
+import SecondaryNav from "../components/global/SecondaryNav";
+import UserInfo from "../components/user/userInfo";
+
 // import CardBuild from '../components/cardBuild';
 
 const Product = () => {
   return (
     <>
-      <SecondaryNav/>
-        <UserInfo/>
-     
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Book Store</title>
+        <meta name="User Data" content="User Data" />
+      </Helmet>
+      <SecondaryNav />
+      <UserInfo />
+
       <Footer />
     </>
   );

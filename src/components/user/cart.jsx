@@ -11,9 +11,11 @@ import {
   Center,
   Heading,
   Button,
+  Flex,
+  Spacer,
 } from "@chakra-ui/react";
-import { CartContext } from "../context/CartContext";
-import { AuthContext } from "../context/AuthContextProvider";
+import { CartContext } from "../../context/CartContext";
+import { AuthContext } from "../../context/AuthContextProvider";
 import axios from "axios";
 
 import { useState, useContext } from "react";
@@ -34,7 +36,6 @@ const cart = () => {
           }`
         );
         setUserData(data.user);
-        console.log(data.user);
       } catch (error) {
         console.log(error);
       }
@@ -49,8 +50,12 @@ const cart = () => {
     );
 
     setSumPrice(sumPrice);
-   
   }, []);
+
+  const deleteCart = () => {
+    setCartItems([]);
+    setSumPrice(0);
+  };
 
   const setOrder = async () => {
     try {
@@ -77,18 +82,14 @@ const cart = () => {
           }),
         }
       );
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
   };
 
-  console.log(cartItems);
-  console.log(sumPrice);
-
   return (
     <Center>
-      <TableContainer mt="3%" w="60%" size="md">
+      <TableContainer mt="3%" w="90%" size="md">
         <Table size="lg" variant="striped" colorScheme="teal">
           <Thead>
             <Tr>
@@ -100,7 +101,7 @@ const cart = () => {
           <Tbody paddingInline="2px">
             {cartItems.map((cartItem) => {
               return (
-                <Tr>
+                <Tr id={cartItem._id}>
                   <Td>{cartItem.product_name}</Td>
                   <Td>{cartItem.qty}</Td>
                   <Td>{cartItem.product_price}</Td>
@@ -116,14 +117,25 @@ const cart = () => {
             </Tr>
           </Tfoot>
         </Table>
-        <Button
-          onClick={setOrder}
-          colorScheme="teal"
-          marginTop="2em"
-          alignSelf="center"
-        >
-          בצע הזמנה
-        </Button>
+        <Flex>
+          <Button
+            onClick={setOrder}
+            colorScheme="teal"
+            marginTop="2em"
+            alignSelf="center"
+          >
+            בצע הזמנה
+          </Button>
+          <Spacer />
+          <Button
+            onClick={deleteCart}
+            colorScheme="red"
+            marginTop="2em"
+            alignSelf="center"
+          >
+            מחק עגלה
+          </Button>
+        </Flex>
       </TableContainer>
     </Center>
   );

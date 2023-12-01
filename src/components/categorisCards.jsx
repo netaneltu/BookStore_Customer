@@ -9,6 +9,7 @@ const CategorisCards = () => {
   return (
     <>
       <SimpleGrid columns={[1, 2, 2, 3]} gap="1rem" margin="5em">
+        
         {categoriesArray.map((category) => {
           return (
             <Card
@@ -35,7 +36,7 @@ const CategorisCards = () => {
                     state:{category:category.category_name,heading:category.category_name ,data:category}
                   });
                 }}
-                borderRadius="15PX" variant="outline" maxW="8em">
+                borderRadius="15PX" variant="outline" maxW="8em" textColor="white">
                   קנה עכשיו
                 </Button>
               </Flex>
