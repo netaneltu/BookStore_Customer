@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import axios from "axios";
+import logo from "../../../dist/output-onlinepngtools.png";
 
 const Footer = () => {
   const [values, setValues] = useState({
@@ -68,7 +69,7 @@ const Footer = () => {
         </Box>
 
         <Box
-          backgroundImage="url(../../public/output-onlinepngtools.png) "
+          backgroundImage={logo}
           mt="-2em"
           w="400px"
           h="400px"

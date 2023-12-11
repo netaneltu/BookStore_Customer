@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useContext, useState } from "react";
-
+import logo from "../../../public/open-book.png"
 import { AuthContext } from "../../context/AuthContextProvider";
 import { useCookies } from "react-cookie";
 import { BiSearchAlt } from "react-icons/bi";
@@ -78,7 +78,7 @@ const Nav = () => {
         direction={["column", "row", "row"]}
       >
         <Box as={rl} to="/home" justifyContent="center" boxSize="5rem">
-          <Image src="../../public/open-book.png" />
+          <Image src={logo} />
         </Box>
         <Box w={["90%", " 30%"]} maxW="30rem">
           <InputGroup>
