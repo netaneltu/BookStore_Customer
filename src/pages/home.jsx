@@ -23,7 +23,7 @@ const home = () => {
       <Container
         borderRadius={10}
         paddingTop="2em"
-        maxW="100%"
+        maxW="80%"
         bg="blackAlpha.100"
         h="22em"
       >

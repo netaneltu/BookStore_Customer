@@ -1,6 +1,7 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useNavigate } from "react-router-dom";
+import { Container } from "@chakra-ui/react";
 
 import "./style.css";
 
@@ -51,7 +52,7 @@ const SaleCarousel = () => {
         renderArrowsWhenDisabled={false}
         renderButtonGroupOutside={false}
         renderDotsOutside={false}
-        containerWidth={300}
+        containerWidth={50}
         responsive={{
           desktop: {
             breakpoint: {

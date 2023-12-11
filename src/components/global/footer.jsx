@@ -24,7 +24,7 @@ const Footer = () => {
   };
 
   const submithandler = async (e) => {
-    e.target.reset()
+    e.target.reset();
     e.preventDefault();
 
     try {
