@@ -66,11 +66,11 @@ const login = () => {
 
   useEffect(() => {
     if (emailIsError) {
-      setMessage("Please enter a valid email");
+      setMessage("אנא הזן מייל תקני");
       setMessageStatus("error");
     } else if (passwordIsError) {
       setMessage(
-        "Please enter a valid password (contains at least one uppercase letter and has a length between 6 and 12 characters)"
+        " אנא הכנס סיסמא תקינה באורך 6-12 תווים המכילה לפחות אות גדולה אות קטנה ומספר"
       );
       setMessageStatus("error");
     } else {
@@ -86,7 +86,7 @@ const login = () => {
     setEmailIsError(!emailregex.test(enterdName));
     try {
       if (emailIsError) {
-        setMessage("Please enter a valid email");
+        setMessage("אנא הזן מייל תקני");
         setMessageStatus("error");
 
         return;
@@ -109,7 +109,7 @@ const login = () => {
       }, 2000);
     } catch (error) {
       console.log(error);
-      setMessage("email or password are incurrect");
+      setMessage("אימייל או סיסמא לא נכונים");
       setMessageStatus("error");
     } finally {
       setLoading(false);
@@ -200,7 +200,6 @@ const login = () => {
           </FormControl>
         </VStack>
       </Container>
-      
     </>
   );
 };

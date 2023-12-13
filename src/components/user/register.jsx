@@ -76,7 +76,7 @@ const register = () => {
 
   useEffect(() => {
     if (emailIsError) {
-      setMessage("Please enter a valid email");
+      setMessage("אנא הזן מייל תקני");
     } else if (passwordIsError) {
       setMessage(
         "אנא הכנס סיסמא תקינה באורך 6-12 תווים המכילה לפחות אות גדולה אות קטנה ומספר"
@@ -284,6 +284,17 @@ const register = () => {
               {/* <LoginButton>log in</LoginButton> */}
             </SimpleGrid>
           </form>
+          <VStack>
+            <Text>
+              מנהל?{" "}
+              <Link
+                href="book-store-c7d27.firebaseapp.com"
+                fontWeight="semibold"
+              >
+                היכנס כאן
+              </Link>
+            </Text>
+          </VStack>
         </VStack>
       </Container>
       <Footer />
