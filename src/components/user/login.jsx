@@ -198,6 +198,17 @@ const login = () => {
               </SimpleGrid>
             </form>
           </FormControl>
+          <VStack>
+            <Text>
+              מנהל?{" "}
+              <Link
+                href="https://book-store-c7d27.firebaseapp.com"
+                fontWeight="semibold"
+              >
+                היכנס כאן
+              </Link>
+            </Text>
+          </VStack>
         </VStack>
       </Container>
     </>

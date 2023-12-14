@@ -284,17 +284,7 @@ const register = () => {
               {/* <LoginButton>log in</LoginButton> */}
             </SimpleGrid>
           </form>
-          <VStack>
-            <Text>
-              מנהל?{" "}
-              <Link
-                href="book-store-c7d27.firebaseapp.com"
-                fontWeight="semibold"
-              >
-                היכנס כאן
-              </Link>
-            </Text>
-          </VStack>
+         
         </VStack>
       </Container>
       <Footer />
