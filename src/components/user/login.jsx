@@ -208,6 +208,8 @@ const login = () => {
                 היכנס כאן
               </Link>
             </Text>
+            <Text>user name: avib@gmail.com</Text>
+              <Text>password: Ee123456</Text>
           </VStack>
         </VStack>
       </Container>
